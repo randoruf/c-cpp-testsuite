@@ -70,7 +70,11 @@ if __name__ == "__main__":
         c_file_output_handle.close()
 
         # compare stdout (using diff commands)
-        
+        p = subprocess.Popen(['[ -z "$(diff ' + tests_prefix + c_file_expected + " " + tests_prefix + c_file_output + ')" ] && exit 0'], shell=True)
+        sg = p.wait()
+        if sg != 0:
+            print(bcolors.FAIL + "[Binay] Program outputs are different." + bcolors.ENDC)
+            failed = True
 
         if failed:
             failure_cnt += 1 

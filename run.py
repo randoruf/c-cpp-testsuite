@@ -53,28 +53,31 @@ if __name__ == "__main__":
 
         failed = False
 
-        # compiling 
-        p = subprocess.Popen([CC + " -o " + tests_prefix + c_file_bin + " " + tests_prefix + c_file], shell=True, stdout=log_file, stderr=error_log_file)
-        sg = p.wait()
-        if sg != 0:
-            print(bcolors.FAIL + "[Clang] Compilation failed." + bcolors.ENDC)
-            failed = True
+        # compiling
+        if not failed:
+            p = subprocess.Popen([CC + " -o " + tests_prefix + c_file_bin + " " + tests_prefix + c_file], shell=True, stdout=log_file, stderr=error_log_file)
+            sg = p.wait()
+            if sg != 0:
+                print(bcolors.FAIL + "[Clang] Compilation failed." + bcolors.ENDC)
+                failed = True
 
-        # binary execution 
-        c_file_output_handle = open(tests_prefix + c_file_output, "w+")
-        p = subprocess.Popen([tests_prefix + c_file_bin], shell=True, stdout=c_file_output_handle)
-        sg = p.wait()
-        if sg != 0:
-            print(bcolors.FAIL + "[Binay] Binary file execution failded." + bcolors.ENDC)
-            failed = True
-        c_file_output_handle.close()
+        # binary execution
+        if not failed: 
+            c_file_output_handle = open(tests_prefix + c_file_output, "w+")
+            p = subprocess.Popen([tests_prefix + c_file_bin], shell=True, stdout=c_file_output_handle)
+            sg = p.wait()
+            if sg != 0:
+                print(bcolors.FAIL + "[Binay] Binary file execution failded." + bcolors.ENDC)
+                failed = True
+            c_file_output_handle.close()
 
         # compare stdout (using diff commands)
-        p = subprocess.Popen(['[ -z "$(diff ' + tests_prefix + c_file_expected + " " + tests_prefix + c_file_output + ')" ] && exit 0'], shell=True)
-        sg = p.wait()
-        if sg != 0:
-            print(bcolors.FAIL + "[Binay] Program outputs are different." + bcolors.ENDC)
-            failed = True
+        if not failed:
+            p = subprocess.Popen(['[ -z "$(diff ' + tests_prefix + c_file_expected + " " + tests_prefix + c_file_output + ')" ] && exit 0'], shell=True)
+            sg = p.wait()
+            if sg != 0:
+                print(bcolors.FAIL + "[Binay] Program outputs are different." + bcolors.ENDC)
+                failed = True
 
         if failed:
             failure_cnt += 1 

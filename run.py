@@ -22,11 +22,11 @@ def print_summary():
     print("================================================")
 
 if __name__ == "__main__":
-    c_file_begin = 219
-    c_file_end = 219
+    c_file_begin = 1
+    c_file_end = 2
     CC = "clang"
 
-    log_file = open("./tests/log.txt", "w+")
+    #log_file = open("./tests/log.txt", "w+")
     error_log_file = open("./tests/error.txt", "w+")
 
     failure_cnt = 0
@@ -48,14 +48,14 @@ if __name__ == "__main__":
         # print(c_file_output)
         # print(c_file_bin)
 
-        error_log_file.write("----------------------\n" + c_file + "    ⬆⬆⬆" + "\n----------------------\n\n")
-        log_file.write("----------------------\n" + c_file + "    ⬆⬆⬆" + "\n----------------------\n\n")
+        # error_log_file.write("----------------------\n" + c_file + "    ⬆⬆⬆" + "\n----------------------\n\n")
+        # log_file.write("----------------------\n" + c_file + "    ⬆⬆⬆" + "\n----------------------\n\n")
 
         failed = False
 
         # compiling
         if not failed:
-            p = subprocess.Popen([CC + " -o " + tests_prefix + c_file_bin + " " + tests_prefix + c_file], shell=True, stdout=log_file, stderr=error_log_file)
+            p = subprocess.Popen([CC + " -o " + tests_prefix + c_file_bin + " " + tests_prefix + c_file], shell=True, stderr=error_log_file)
             sg = p.wait()
             if sg != 0:
                 print(bcolors.FAIL + "[Clang] Compilation failed." + bcolors.ENDC)
@@ -85,6 +85,6 @@ if __name__ == "__main__":
 
 
     print_summary()
-    log_file.close()
+    #log_file.close()
     error_log_file.close()
     exit(0)

@@ -12,12 +12,14 @@ class bcolors:
     UNDERLINE = '\033[4m'
     ENDC = '\033[0m'
 
-def exit_program(status):
-    print("program exiting.....")
-    log_file.close()
-    error_log_file.close()
-    exit(status)
 
+def print_summary():
+    print("\n\n================================================")
+    print("Summary Report")
+    print("================================================")
+    print("Success: ", c_file_end - c_file_begin + 1 - failure_cnt)
+    print("Failure: ", failure_cnt)
+    print("================================================")
 
 if __name__ == "__main__":
     c_file_begin = 219
@@ -26,6 +28,8 @@ if __name__ == "__main__":
 
     log_file = open("./tests/log.txt", "w+")
     error_log_file = open("./tests/error.txt", "w+")
+
+    failure_cnt = 0
 
     for i in range(c_file_begin, c_file_end+1):
         c_file_no = str(i)
@@ -46,19 +50,34 @@ if __name__ == "__main__":
 
         error_log_file.write("----------------------\n" + c_file + "    ⬆⬆⬆" + "\n----------------------\n\n")
         log_file.write("----------------------\n" + c_file + "    ⬆⬆⬆" + "\n----------------------\n\n")
+
+        failed = False
+
+        # compiling 
         p = subprocess.Popen([CC + " -o " + tests_prefix + c_file_bin + " " + tests_prefix + c_file], shell=True, stdout=log_file, stderr=error_log_file)
         sg = p.wait()
         if sg != 0:
             print(bcolors.FAIL + "[Clang] Compilation failed." + bcolors.ENDC)
-            exit_program(1)
-        
+            failed = True
 
+        # binary execution 
         c_file_output_handle = open(tests_prefix + c_file_output, "w+")
         p = subprocess.Popen([tests_prefix + c_file_bin], shell=True, stdout=c_file_output_handle)
         sg = p.wait()
         if sg != 0:
-            print(bcolors.FAIL + "[" + c_file_bin + "] Binary file execution failded." + bcolors.ENDC)
+            print(bcolors.FAIL + "[Binay] Binary file execution failded." + bcolors.ENDC)
+            failed = True
         c_file_output_handle.close()
 
+        # compare stdout (using diff commands)
+        
 
-    exit_program(0)
+        if failed:
+            failure_cnt += 1 
+        print("-------------------------------------")
+
+
+    print_summary()
+    log_file.close()
+    error_log_file.close()
+    exit(0)

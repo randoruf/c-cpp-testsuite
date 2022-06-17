@@ -1,0 +1,92 @@
+	.section	__TEXT,__text,regular,pure_instructions
+	.build_version macos, 12, 0	sdk_version 12, 3
+	.globl	_factorial                      ## -- Begin function factorial
+	.p2align	4, 0x90
+_factorial:                             ## @factorial
+	.cfi_startproc
+## %bb.0:                               ## %entry
+	movq	%rbp, (%r15)
+	addq	$8, %r15
+	.cfi_def_cfa_offset 16
+	.cfi_offset %rbp, -16
+	leaq	-8(%rsp), %rbp
+	.cfi_def_cfa_register %rbp
+	subq	$24, %rsp
+	movl	%edi, -8(%rbp)
+	cmpl	$2, -8(%rbp)
+	jge	LBB0_2
+## %bb.1:                               ## %if.then
+	movl	-8(%rbp), %eax
+	movl	%eax, -4(%rbp)
+	jmp	LBB0_3
+LBB0_2:                                 ## %if.else
+	movl	-8(%rbp), %eax
+	movl	%eax, -12(%rbp)                 ## 4-byte Spill
+	movl	-8(%rbp), %edi
+	subl	$1, %edi
+	callq	_factorial
+	movl	%eax, %ecx
+	movl	-12(%rbp), %eax                 ## 4-byte Reload
+	imull	%ecx, %eax
+	movl	%eax, -4(%rbp)
+LBB0_3:                                 ## %return
+	movl	-4(%rbp), %eax
+	addq	$24, %rsp
+	subq	$8, %r15
+	movq	(%r15), %rbp
+	retq
+	.cfi_endproc
+                                        ## -- End function
+	.globl	_main                           ## -- Begin function main
+	.p2align	4, 0x90
+_main:                                  ## @main
+	.cfi_startproc
+## %bb.0:                               ## %entry
+	pushq	%rdi
+	pushq	%rsi
+	movl	$1024, %edi                     ## imm = 0x400
+	callq	_malloc
+	movq	%rax, %r15
+	popq	%rsi
+	popq	%rdi
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset %rbp, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register %rbp
+	subq	$16, %rsp
+	movl	$0, -4(%rbp)
+	movl	$1, -8(%rbp)
+LBB1_1:                                 ## %for.cond
+                                        ## =>This Inner Loop Header: Depth=1
+	cmpl	$10, -8(%rbp)
+	jg	LBB1_4
+## %bb.2:                               ## %for.body
+                                        ##   in Loop: Header=BB1_1 Depth=1
+	movl	-8(%rbp), %edi
+	callq	_factorial
+	movl	%eax, %esi
+	leaq	L_.str(%rip), %rdi
+	movb	$0, %al
+	callq	_printf
+## %bb.3:                               ## %for.inc
+                                        ##   in Loop: Header=BB1_1 Depth=1
+	movl	-8(%rbp), %eax
+	addl	$1, %eax
+	movl	%eax, -8(%rbp)
+	jmp	LBB1_1
+LBB1_4:                                 ## %for.end
+	xorl	%eax, %eax
+	addq	$16, %rsp
+	popq	%rbp
+	movq	%r15, %rdi
+	callq	_free
+	xorl	%eax, %eax
+	retq
+	.cfi_endproc
+                                        ## -- End function
+	.section	__TEXT,__cstring,cstring_literals
+L_.str:                                 ## @.str
+	.asciz	"%d\n"
+
+.subsections_via_symbols

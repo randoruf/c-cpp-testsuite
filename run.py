@@ -22,9 +22,16 @@ def print_summary():
     print("================================================")
 
 if __name__ == "__main__":
+    # must test:
+    #       00189.c 
+    #           ~/Documents/GitHub/strongbox-llvm13-macOS/llvm/build/bin/clang -S ./tests/single-exec/00189.c -o ./tests/single-exec/00189.S 
+    #           clang ./tests/single-exec/00189.S -o ./tests/single-exec/00189.bin
+    #           ./tests/single-exec/00189.bin
+    
     c_file_begin = 1
-    c_file_end = 2
-    CC = "clang"
+    c_file_end = 220
+    # CC = "clang"
+    CC = "~/Documents/GitHub/strongbox-llvm13-macOS/llvm/build/bin/clang"
 
     #log_file = open("./tests/log.txt", "w+")
     error_log_file = open("./tests/error.txt", "w+")

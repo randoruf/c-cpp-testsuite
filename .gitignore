@@ -1,5 +1,6 @@
 *.bin
 *.output
+*.S
 
 tests/error.txt
 tests/log.txt

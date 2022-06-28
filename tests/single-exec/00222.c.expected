@@ -1,0 +1,7 @@
+destination: 20 22
+The house at 30 20 (size 11 34) is owned by Caleb Curry
+From (0 1) to (1 2) to (3 4).
+Log - position: 20 22
+The house at 10 10 (size 30 30) is owned by Caleb
+value at destination of myPointers.a: 9001
+The owner is Caleb

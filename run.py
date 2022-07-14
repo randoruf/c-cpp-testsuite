@@ -30,17 +30,19 @@ if __name__ == "__main__":
     #           clang ./tests/single-exec/00189.S -o ./tests/single-exec/00189.bin
     #           ./tests/single-exec/00189.bin
     
-    c_file_begin = 1
-    c_file_end = 220
+    c_file_begin = 222
+    c_file_end = 224
     
     # C preprocessor 
     CPP=""
     # C compiler
     CC="/home/haohua/Documents/StrongBox/strongbox-llvm10/build/bin/clang"
-    CFLAGS=""
+    CFLAGS=" -lm "
+
     # C++ compiler 
     CXX="/home/haohua/Documents/StrongBox/strongbox-llvm10/build/bin/clang++"
     CPPFLAGS=""
+    
     # Linker 
     LD="/home/haohua/Documents/StrongBox/strongbox-llvm10/build/bin/ld.lld"
     LDFLAGS=""
@@ -80,7 +82,7 @@ if __name__ == "__main__":
 
         # compiling
         if not failed:
-            p = subprocess.Popen([CC + " -o " + tests_prefix + c_file_bin + " " + tests_prefix + c_file], shell=True, stderr=error_log_file)
+            p = subprocess.Popen([CC + " " + CFLAGS + " -o " + tests_prefix + c_file_bin + " " + tests_prefix + c_file], shell=True)
             sg = p.wait()
             if sg != 0:
                 print(bcolors.FAIL + "[Clang] Compilation failed." + bcolors.ENDC)

@@ -69,12 +69,12 @@ int main() {
   
   int n = sizeof(data) / sizeof(data[0]);
   
-  printf("Unsorted Array\n");
+  // printf("Unsorted Array\n");
   printArray(data, n);
   
   // perform quicksort on data
   quickSort(data, 0, n - 1);
   
-  printf("Sorted array in ascending order: \n");
+  // printf("Sorted array in ascending order: \n");
   printArray(data, n);
 }

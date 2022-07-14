@@ -36,15 +36,19 @@ if __name__ == "__main__":
     # C preprocessor 
     CPP=""
     # C compiler
-    CC="clang"
+    CC="/home/haohua/Documents/StrongBox/strongbox-llvm10/build/bin/clang"
     CFLAGS=""
     # C++ compiler 
-    CXX="clang++"
+    CXX="/home/haohua/Documents/StrongBox/strongbox-llvm10/build/bin/clang++"
     CPPFLAGS=""
     # Linker 
-    LD="ld.lld"
+    LD="/home/haohua/Documents/StrongBox/strongbox-llvm10/build/bin/ld.lld"
     LDFLAGS=""
     # for the dynamic linker (after linking phase), for example `-lm, -lpthread, -lrt`
+    # (glibc: libc.so, libc.so.6)
+    # (math: libm.so)
+    # (pthread: )
+    # (real-time : librt.so)
     LD_LIBRARY_PATH=""
 
     #log_file = open("./tests/log.txt", "w+")

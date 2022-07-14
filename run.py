@@ -30,8 +30,20 @@ if __name__ == "__main__":
     
     c_file_begin = 1
     c_file_end = 220
-    # CC = "clang"
-    CC = "~/Documents/GitHub/strongbox-llvm13-macOS/llvm/build/bin/clang"
+    
+    # C preprocessor 
+    CPP=""
+    # C compiler
+    CC="~/Documents/GitHub/strongbox-llvm13-macOS/llvm/build/bin/clang"
+    CFLAGS=""
+    # C++ compiler 
+    CXX=""
+    CPPFLAGS=""
+    # Linker 
+    LD=""
+    LDFLAGS=""
+    # for the dynamic linker (after linking phase)
+    LD_LIBRARY_PATH=""
 
     #log_file = open("./tests/log.txt", "w+")
     error_log_file = open("./tests/error.txt", "w+")

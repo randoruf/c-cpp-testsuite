@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import subprocess
 import os
 
@@ -34,15 +36,15 @@ if __name__ == "__main__":
     # C preprocessor 
     CPP=""
     # C compiler
-    CC="~/Documents/GitHub/strongbox-llvm13-macOS/llvm/build/bin/clang"
+    CC="clang"
     CFLAGS=""
     # C++ compiler 
-    CXX=""
+    CXX="clang++"
     CPPFLAGS=""
     # Linker 
-    LD=""
+    LD="ld.lld"
     LDFLAGS=""
-    # for the dynamic linker (after linking phase)
+    # for the dynamic linker (after linking phase), for example `-lm, -lpthread, -lrt`
     LD_LIBRARY_PATH=""
 
     #log_file = open("./tests/log.txt", "w+")
